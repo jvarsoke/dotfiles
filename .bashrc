@@ -52,6 +52,7 @@ export SVN_EDITOR=vim
 export DISPLAY PS2
 export MAIL='/home/jvarsoke/mail/INBOX'
 export PAGER='less'
+export GREP_OPTIONS='--color'
 
 ##libraries
 

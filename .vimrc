@@ -104,6 +104,8 @@ autocmd FileType make setlocal noexpandtab
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 " the command 'retab' will fix a file
 
+" detect the filetype from the shebang-line
+autocmd BufNewFile,BufRead * filetype detect
 
 "------------------------------------------------
 " stuff from old vimrc
