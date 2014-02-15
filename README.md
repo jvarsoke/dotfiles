@@ -6,34 +6,14 @@ My configuration files for unix-like places of worship.
 ``` bash
 $ git clone git@github.com:jvarsoke/dotfiles.git ~/.dotfiles
 
-#then link everything manually -- for now
+$ ~/.dotfiles/bootstrap.sh
 
 ```
 
 ## What to expect
 In short, not much.  This is a first forray into organization of something built up over years of unixing.
 
-## TODO
-List of requirements I'd like this to fulfill:
-
-### Bootstrap
-- Bootstrap should create all symlinks
-#### Symlinks
-- All symlinks are to $HOME
-- Files symed to $HOME might be in sub-dirs for organization
-- All symed files get a .dot in front
-- Do directories?
-	.vim does,
-	bin does not
-- bashrc should be split into init.d type runfiles
-- Should they go in subject-related directories?
-- If so, the would be slower to read (find)
-   Could use symlinks to create the init.d files
-   If they have .bashrc extension
-- SIMPLIFIED: native filenames in the .dotfiles directory
-
-
-### Exceptions
-- Sensitive info should be off-book
-- remove passwords
-- make local.variables to support things like Cygwin
+## Okay, but what does it do?
+Bootstrap makes links of all ".dot" files in ~/.dotfiles to $HOME for all files in ~/.dotfiles root.
+For non ".dot" directories, bootstrap will link the files inside the directory to the ~/directory.
+Bootstrap should no-clobber and report any existing files that get in its way.
