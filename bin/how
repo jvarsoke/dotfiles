@@ -1,20 +1,34 @@
 #!/usr/bin/env bash
-
+# how (howfiles) a simple notekeeper originally by mrimli Copyright 1995
+# this version was written in Bash instead of the original C 
+# by jvarsoke Copyright 2014, released to the Public Domain
 
 HOW_DIR=$HOME/how
 EXT=".how"
 
 [ -z $PAGER ] && PAGER='cat'
 [ -z $EDITOR ] && EDITOR='vim'
+[ -z $GREPPER ] && GREPPER='grep'
+if [ $GREPPER = 'grep' ] ; then
+	GREP_OPTS="-His --color"
+fi
 
 function do_usage() {
-	echo "Usage: $0 -h help, -a edit, no-arg cat"
+	cat <<'EOM'
+Usage: how [-halsk] [topic/partial/keyword]
+Reads howfiles - a simple not-taker
+	-h		help (this file)
+	[topic]		prints the topic to the screen
+	-a [topic]	edit or append to a topic
+	-l [partial]	lists topics matching the leading partial
+	-s/-k [keyword]	returns howfile lines matching the keyword 
+EOM
 	exit
 }
 
 function do_cat() {
-	echo looking for "$HOW_DIR/$1$EXT"
 	[ -z $1 ] && do_usage
+	$1=${1%$EXT} #remove extenion if provided
 	[ ! -f "$HOW_DIR/$1$EXT" ] && echo "Couldn't find howfile: $1$EXT" && exit 1
 
 	exec $PAGER "$HOW_DIR/$1$EXT"
@@ -22,12 +36,17 @@ function do_cat() {
 
 function do_edit() {
 	[[ -z $1 ]] && do_usage
+	$1=${1%$EXT} #remove extenion if provided
 	exec $EDITOR "$HOW_DIR/$1$EXT"
 }
 
+#TODO: remove .how from the results
 function do_search() {
-	[[ -n $1 ]] && do_usage
-	echo searching for $1
+	[[ -z $1 ]] && do_usage
+	search=$1
+	pushd $HOW_DIR > /dev/null
+	$GREPPER $GREP_OPTS $search *$EXT
+	popd >/dev/null
 }
 
 function do_list() {
@@ -39,7 +58,7 @@ function do_list() {
 
 # Main ----------------------------------------------------------------------
 operation="cat"
-while getopts ":ahsl" opt; do
+while getopts ":ahskl" opt; do
 	case $opt in
 		a)
 			operation=edit
@@ -47,7 +66,7 @@ while getopts ":ahsl" opt; do
 		h)
 			do_usage
 			;;
-		s)
+		s|k)
 			operation=search
 			;;
 		l)
@@ -80,3 +99,5 @@ case $operation in
 		do_list $arg
 		;;
 esac
+
+
