@@ -28,6 +28,10 @@ List of requirements I'd like this to fulfill:
 - bashrc should be split into init.d type runfiles
 - Should they go in subject-related directories?
 - If so, the would be slower to read (find)
+   Could use symlinks to create the init.d files
+   If they have .bashrc extension
+- SIMPLIFIED: native filenames in the .dotfiles directory
+
 
 ### Exceptions
 - Sensitive info should be off-book

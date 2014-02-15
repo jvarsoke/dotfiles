@@ -11,28 +11,107 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until no longer a symlink
 	# relative to the path where the symlink file was located
 	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" 
 done
-DDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+DOTFILES="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-[[ ! -d $DDIR ]] && echo "Couldn't figure out the dotfiles directory" && exit 1
+[[ ! -d $DOTFILES ]] && echo "Couldn't figure out the dotfiles directory" && exit 1
 
-HDIR=${1:-$HOME}
+pushd $DOTFILES > /dev/null
 
-pushd $HDIR > /dev/null
+shopt -s extglob
+shopt -s nullglob
+shopt -s globstar
+folders=(**/)
+shopt -s dotglob
+links=(.!(.||*swp|gitignore|git))
 
-#list of files we want to symlink with a leading dot
-#TODO: make this automagic
-dot_sym_files=(vim vim/vimrc)
+# do_usage ------------------------------------------------------------------
+function do_usage() {
+	echo "Usage: $0 [install|update|clean]"
+}
 
-for s in ${dot_sym_files[@]}; do
-	skip=false
-	src=$DDIR/${s}
-	tgt=$HDIR/"."${s}
-	[ ! -e $src ] && skip=true && echo "Couldn't find src file: " $src 
-	[ -e $tgt ] && skip=true && echo "File already exists: " $tgt
-	if [ ! $skip ]; then
-		echo "ln -s $src $tgt"
-	fi
-done
+# do_install ----------------------------------------------------------------
+function do_install() {
+	#list of files we want to symlink with a leading dot
+	#setup_links
+	setup_folders
+}
+
+function setup_links() {
+	echo "Install Links ${links[@]}"
+	for s in ${links[@]}; do
+		src=$DOTFILES/${s}
+		tgt=$HOME/${s}
+		if [ ! -e $src ] ; then
+			echo "Warning: Couldn't find src file: $src, skipping"
+		elif [ -L $tgt ] ; then
+			lnk=`readlink -f $tgt`
+			if [ ! $lnk == $src ] ; then 
+				echo "Skipping: $tgt linked to $lnk not $src"
+			else
+				[[ $VERBOSE ]] && echo "Skipping: $tgt already linked to $lnk"
+			fi
+		elif [ -f $tgt ] ; then
+			echo "Skipping: File already exists: $tgt"
+		else
+			echo "ln -s $src $tgt"
+		fi
+	done
+}
+
+function setup_folders() {
+	echo "Installing files in folders: ${folders[@]}"
+	for d in ${folders[@]}; do
+		d=${d%?}
+		files=($d/!(*swp|.gitignore|core))
+		for s in ${files[@]}; do
+			src=$DOTFILES/${s}
+			tgt=$HOME/${s}
+			if [ ! -e $src ] ; then
+				echo "Warning: Couldn't find src file: $src, skipping"
+			elif [ -L $tgt ] ; then
+				lnk=`readlink -f $tgt`
+				if [ ! $lnk == $src ] ; then 
+					echo "Skipping: $tgt linked to $lnk not $src"
+				else
+					[[ $VERBOSE ]] && echo "Skipping: $tgt already linked to $lnk"
+				fi
+			elif [ -f $tgt ] ; then
+				echo "Skipping: File already exists: $tgt"
+			else
+				if [ -f "$HOME/$d" ] ; then
+					echo "Error: non-directory file $HOME/$d exists"
+				elif [ ! -d "$HOME/$d" ] ; then
+					echo "Making $HOME/$d"
+				fi
+				echo "ln -s $src $tgt"
+			fi
+		done
+	done
+}
+
+# do_clean ------------------------------------------------------------------
+#cleanup an install of .dotfiles (removing all the symlinks)
+function do_clean() {
+	echo "TODO: clean"	
+}
+
+# Main ----------------------------------------------------------------------
+case "$1" in
+	install|"")
+		do_install
+		;;
+	clean)
+		do_clean
+		;;
+	update)
+		echo "Update not available yet";
+		;;
+	*)
+		do_usage
+		exit 3
+		;;
+esac
+
 
 popd > /dev/null
 
