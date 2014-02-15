@@ -1,0 +1,23 @@
+Problems:
+---------
+   CLASSPATH: can't use ~ 
+
+Catch and Finally:
+------------------
+if you throw in a catch, then have a finally which returns 
+the return takes precidence and the throw is ignored.
+
+final
+-----
+if you convert a static char to final static char rm *.class or else
+you'll get numbers rather than characters in any .toString() instance
+
+No Font on Linux
+----------------
+Font specified in font.properties not found [--zapf dingbats-medium-r-normal--*-%d-*-*-p-*-adobe-fontspecific]    
+just comment out the line in ./java/jre/lib/font.properties
+
+Running from a Jar
+------------------
+java -jar Foo.jar
+in Manifest.mf you need "Main-class: MyMainApp"

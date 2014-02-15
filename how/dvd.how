@@ -1,0 +1,18 @@
+##DVD ripping in Linux
+
+oh yeh... lossless command:
+
+dd if=/media/cdrom0 of=/home/$USER/Desktop/movie.iso
+
+better: ddrescue -n -b 2048 /dev/dvd dvd.iso dvd.log
+
+#Rip: use handbrake-gtk
+
+
+#To watch the movie in Mplayer (or Kaffeine):
+mkdir /home/$USER/Desktop/DVD && mount /home/$USER/Desktop/movie.iso /home/$USER/Desktop/DVD -t iso9660
+
+and then popint the player to /home/$USER/Desktop/DVD for the DVD drive.
+
+or use:
+http://www.exit1.org/dvdrip/

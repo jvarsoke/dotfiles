@@ -1,0 +1,171 @@
+Solaris DNS
+-----------
+
+/etc/init.d/inetsvc  - starts in.named
+
+update: # kill -HUP `cat /etc/named.pid`
+
+MANUAL ZONE TRANSFER - /etc/named-xfer////////////////////////////////////////
+# /etc/named-xfer -z andonet.net -f /tmp/db.andonet -s 0 dns1
+# echo $?
+-z	- zone
+-f	- temp file to store copy
+-s	- serial numer
+	  0 : must update
+
+echo responses
+0	- zone data is up-to-date and no transfer was needed
+1	- succesful transfer
+2	- host(s) queired can't be reached
+3	- an error occured
+
+
+PRIMARY MASTER BOOT FILE - /etc/named.boot/////////////////////////////////////
+
+--begin named.boot
+;
+; Sample named.boot file for Primary Master Name Server
+;
+; type 			domain				source file or host
+;
+
+; running directory for named
+directory /etc/named
+
+;cache
+cache			.				db.cache
+
+; zone names
+primary			andonet.net			db.adnonet
+primary			foo.com				db.foo
+
+; reverse lookups
+primary			0.0.127.in-addr.arpa		db.127.0.0
+primary			187.103.199.in-addr.arpa	db.199.103.187
+
+secondary		1.168.192.in-addr.arpa	192.168.192.2 sec.db.192.168.1
+--end named.boot
+
+
+SECONDARY MASTER BOOT FILE - /etc/named.boot//////////////////////////////////
+
+--begin named.boot
+;
+; Sample named.boot file for Primary Master Name Server
+;
+; type 			domain				source file or host
+;
+
+; running directory for named
+directory /etc/named
+
+;cache  ??
+cache			.	 			sec.db.cache
+
+; zone names
+secondary		andonet.net		199.103.187.20 sec.ddb.adnonet
+secondary		foo.com			199.103.187.20 sec.db.foo
+
+; reverse lookups
+secondary		0.0.127.in-addr.arpa		sec.db.127.0.0
+secondary		187.103.199.in-addr.arpa 199.103.187.20 sec.db.199.103.187
+
+--end named.boot
+
+
+DATAFILES EXPLAINED//////////////////////////////////////////////////////////
+
+.	- free standing dot in the name field refers to the current domain
+@	- free standing @ in the name field denotes the current origin
+..	- free standing .. represents the null domain name of the root
+()	- group data across \n
+;	- comment
+*	- wildcard
+
+$INCLUDE	- load file at this point
+ex: $INCLUDE /etc/passwd
+
+$ORIGIN		- set origin
+ex: $ORIGIN  andonet.net
+
+Types----
+SOA	- start of authority
+NS	- name server
+A	- name to address
+PTR	- pointer (addres to name)
+CNAME	- canonical name
+TXT	- text information
+WKS	- well known service
+HINFO	- host info
+MX	- mail exchanger
+
+ROOT SERVER FILE: db.cache////////////////////////////////////////////////////
+; FILL IN THE NAMES AND ADDRESSES OF THE ROOT SERVERS
+;
+                99999999        IN      NS      nic.ddn.mil.
+                99999999        IN      NS      a.isi.edu.
+                99999999        IN      NS      terp.umd.edu.
+                99999999        IN      NS      c.nyser.net.
+nic.ddn.mil.    99999999        IN      A       26.0.0.73
+c.nyser.net.    99999999        IN      A       192.33.4.12
+ns.nasa.gov.	99999999        IN      A       128.102.16.10
+a.isi.edu.      99999999        IN      A       26.3.0.103
+
+
+LOOKUP FILE EXAMPLE: db.andonet//////////////////////////////////////////////
+@	IN	SOA	dns1.andonet.net.	root.dns1.andonet.net. (
+					1	;serial
+					3600	;refresh every hour
+					900	;retry 15 minutes
+					1209600	;expire two weeks
+					86400	;min ttl of 1 day
+					)
+;nameservers
+			IN	NS	dns1.andonet.net.
+			IN	NS	dns2.andonet.net.
+
+;addresses
+localhost		IN	A	127.0.0.1
+andonet.net.		IN	A	199.103.187.1
+ftp.andonet.net.	IN	A	199.103.187.1
+www			IN	CNAME	ftp
+--end db.andonet
+
+REV LOOKUP FILE EXAMPLE: db.199.103.187/////////////////////////////////////
+@       IN      SOA     dns1.andonet.net.       root.dns1.andonet.net. (
+                                        1       ;serial
+                                        3600    ;refresh every hour
+                                        900     ;retry 15 minutes
+                                        1209600 ;expire two weeks
+                                        86400   ;min ttl of 1 day
+                                        )
+;nameservers
+        IN      NS      dns1.andonet.net.
+
+;rev lookups
+1	IN	PTR	andonet.net.
+20	IN	PTR	dns1.andonet.net
+
+--end db.199.103.187
+
+REV LOOKUP FILE LOOPBACK: db.127.0.0////////////////////////////////////////
+@       IN      SOA     dns1.andonet.net.       root.dns1.andonet.net. (
+                                        1       ;serial
+                                        3600    ;refresh every hour
+                                        900     ;retry 15 minutes
+                                        1209600 ;expire two weeks
+                                        86400   ;min ttl of 1 day
+                                        )
+;nameservers
+        IN      NS      dns1.andonet.net.
+
+1	IN	PTR	localhost.
+--end db.127.0.0
+
+RESOLV.CONF FOR PRIMARY: /etc/resolv.conf///////////////////////////////////
+domain		andonet.net.
+nameserver	127.0.0.1
+nameserver	199.103.187.21  ;secondary
+--end resolv.conf
+
+

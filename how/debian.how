@@ -1,0 +1,100 @@
+##Debian Hints
+#find out the version name
+lsb_release -c #(name)
+cat /etc/debian_version #(numeric)
+
+apt-cache search "ogg vorbis"
+apt-cache show xmms
+apt-get update #see what's new
+apt-get upgrade
+dpkg -l  #to see what we have
+update-alternatives --display vi
+
+##upgrade a distro
+change /etc/apt/sources.list to the new distro
+apt-get dist-upgrade
+apt-get upgrade
+
+#reconfigure default options
+   dpkg-reconfigure exim4-config
+
+#restart service
+   invoke-rc.d exim4 reload
+
+aptitude
+
+backup utils: afio and cpio
+
+##howto CD-RW
+  recompile the kernel with SCSI, SCSI Emulation Support, and SCSI CDROM
+  add lilo.conf: append="hdd=ide-scsi" (where hdd is the drive)
+  add /etc/init.d/rcS: modprobe ide-scsi
+  add /etc/modules.conf: ide-cd ignore="hdd"
+  check: cdrecord -scanbus
+
+#To install a .deb file, become root and use the command:
+
+    dpkg -i filename.deb 
+
+    Dpkg can also be used to:
+
+    * dpkg –unpack: unpacks the file but does not install it
+    * dpkg –configure: presents whatever configuration options 
+      are available for the package
+    * dpkg –remove: removes a package
+
+
+
+##new kernel - the debian way
+install: kernel-package and dpkg
+apt-get install module-init-tools initrd-tools procps
+	If you are asked the following question:
+	"If you really want to remove modutils type 'yes':"
+	type yes.
+
+make menuconfig
+make-kpkg buildpackage -rev Custom.1 kernel_image
+cd /usr/src
+dpkg -i kernel-image-2.6.6_Custom.1_i386.deb
+cd /boot/
+mkinitrd -o initrd.img-2.6.8.1 2.6.8.1
+in /boot/grub/menu make sure to add the initrd line
+update-grub
+reboot
+
+(might have to remove GAMMA DRM from the config file)
+
+## find out what you have installed
+dpkg --get-selections
+
+## fonts
+   xfontsel (to see the fonts in action)
+   /etc/X11/fonts is where you can find the aliases for the fonts
+   dpkg-reconfigure fontconfig (might be need to get new fonts to take affect)
+
+## usb & gvm & nautilus w/o gnome
+instead of USB with hotplug I did:
+gnome-volume-manager
+which uses nautilus to envoke a browser upon USB in
+then had to add the icons to ~/.icons
+and create .gtkrc-2.0 with the line
+   gtk-ivon-yhrmr-nsmr = "ChaninDjoole"
+
+## /etc/init/rc.local
+   is actually /etc/init.d/bootmisc.sh
+
+## php
+   apt-get install php4-gd (for the graphic libraries)
+
+##nvidia and new kernel
+   boot into the new kernel
+   m-a prepare
+   m-a auto-install nvidia
+   reboot
+
+##make vim the default system-wide editor (for su etc)
+   update-alternatives --config editor
+
+##fonts (firefox)
+ gtk-chtheme
+

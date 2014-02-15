@@ -1,0 +1,33 @@
+##Eclipse
+
+#Setup / Plugins
+   VIM - http://vrapper.sourceforge.net/home/
+      Drag the "Install" icon into Eclipse
+
+   Color - http://eclipsecolorthemes.org/ 
+      goto Help->Marketplace search for "Eclipse color"
+      After the installation, download OldSchool:
+      http://eclipsecolorthemes.org/?view=theme&id=7650 (need the XML)
+
+      Window→Preferences→General→Appereance→Color Theme to change the 
+      color theme.
+
+
+
+
+#Ivy
+   used to manage Java dependencies.  Grabs jarfiles from repositories
+
+#Necessitas - plugin
+   a plug-in to make Ivy work with Eclipse
+   after the ivy.xml and ivyconf.xml are set up, goto
+   project->properties->buildpath->Ivy and you'll see where to fetch stuff.
+
+#build.xml - generation
+   project[right click]->export->build antfile
+
+#get javadoc to come up automagically
+   window->preferences->JRE do a search and select an SDK (JDK) instead
+   of the JRE.
+   Then open up the javadoc perspective/view and press CTRL-F2 over
+   a selected word

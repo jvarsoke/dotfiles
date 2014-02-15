@@ -1,0 +1,37 @@
+##how to update gmail fingerprint
+openssl s_client -connect pop.gmail.com:995 -showcerts < /dev/null | openssl x509 -fingerprint -md5 -text | grep Fingerprint | awk -F= '{print $2}'
+
+##how to update the gmail cert
+cd /etc/ssl/certs
+wget -O Equifax_Secure_Certificate_Authority.pem \
+         https://www.geotrust.com/resources/root_certificates/certificates/Equifax_Secure_Certificate_Authority.cer
+
+chmod 644 Equifax_Secure_Certificate_Authority.pem
+openssl x509 -in Equifax_Secure_Certificate_Authority.pem \
+                 -fingerprint -subject -issuer -serial -hash -noout
+
+		 MD5 Fingerprint=67:CB:9D:C0:13:24:8A:82:9B:B2:17:1E:D1:1B:EC:D4
+		 subject= /C=US/O=Equifax/OU=Equifax Secure Certificate Authority
+		 issuer= /C=US/O=Equifax/OU=Equifax Secure Certificate Authority
+		 serial=35DEF4CF
+		 594f1775
+c_rehash .
+file 594f1775.*
+		 594f1775.0: symbolic link to `Equifax_Secure_Certificate_Authority.pem'
+
+
+#how to get the fingerprint?  (I don't know)
+openssl s_client -CApath /etc/ssl/certs -connect pop.gmail.com:993 -showcerts \
+  < /dev/null \
+  | perl -lne 'print if /BEGIN CERT/ .. /END CERT/; last if /END CERT/' \
+  > pop.gmail.pem
+
+openssl x509 -in /etc/ssl/certs/pop.gmail.pem -noout -fingerprint
+
+#how to do this (again) 201005
+cd /etc/ssl/certs
+openssl s_client -connect smtp.gmail.com:995 -showcerts
+  #copy the --begin to the end-- and put in 201005_gmail.pem
+c_rehash /etc/ssl/certs
+openssl x509 -fingerprint -md5 -noout -in <new>_gmail.pem
+put the fingerprint in /etc/fetchmailrc

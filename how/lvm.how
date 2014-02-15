@@ -1,0 +1,23 @@
+LVM (1)
+---
+
+adding a new disk:
+
+partition the disk to LVM (8E)
+
+pvcreate /dev/hde5
+
+append it to the volume group
+
+use vgextend to make the logical volumn larger
+
+then resize that volume group for the fs (resize_reiserfs).
+
+
+#resize bubba volume
+> e2fsck -f /dev/VolGroup00/LogVol00          # check & repair
+> resize2fs -p /dev/VolGroup00/LogVol00 20G   # resize to 20G
+> e2fsck -f /dev/VolGroup00/LogVol00          # check & repair
+> # lvm
+> lvm > lvreduce -L20G /dev/VolGroup00/LogVol00
+

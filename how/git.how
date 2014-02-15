@@ -1,0 +1,5 @@
+#get from sb
+git pull ssh://shadowbox/home/jvarsoke/apl/th
+#files that changed
+git diff --name-only <common-branch> <local-branch>
+

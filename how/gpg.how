@@ -1,0 +1,7 @@
+To encrypt file /tmp/file.tgz by symmetric AES algorithm (256 is a key lenght) with one command please use the following command:
+
+echo password | gpg --batch -q --passphrase-fd 0 --cipher-algo AES256 -c /tmp/file.tgz
+
+Previous command will create file.tgz.gpg that can be extracted automatically by next one:
+
+echo password | gpg --batch -q -o /tmp/file.tgz --passphrase-fd 0 --decrypt /tmp/file.tgz.gpg

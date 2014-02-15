@@ -1,0 +1,86 @@
+
+#make ISO image
+mkisofs -r /home/jvarsoke > /tmp/jvarsoke-home.iso
+dd if=/dev/cdrom of=image.iso
+to mount
+mount -o loop,ro -t iso9660 ./image.iso /mnt/iso
+to record
+cdrecord -v speed=4 dev=0,0,0 -data image.iso
+to erase CD-RW before write
+cdrecord -v speed=4 dev=0,0,0 blank=fast -data image.iso
+
+#keyboard repeat rate
+xset r rate 1000 
+
+##modules
+Note: /etc/modules.conf is more recent than /lib/modules/2.4.19/modules.dep
+modprobe: Nothing to load ???
+Specify at least a module or a wildcard like \*
+sancho# depmod -a
+
+
+##pretty printer
+indent
+
+##printer test
+lptest > /dev/lp1
+
+##to wipe out your partition table (if you screwed it up)
+dd if=/dev/zero of=/dev/hda count=10
+
+##to get /var/messages on your F8 console
+   edit: /var/syslog.conf
+   addline: *.*		/dev/tty8
+
+bash# rpm -i foobar*.src.rpm
+bash# cd /usr/src/redhat/SPECS
+bash# rpm -ba foobar-1.0-1.spec
+
+To build in incremental steps, do:
+bash# rpm -bp foobar-1.0-1.spec    ...( to do prep stage)
+bash# rpm --short-circuit -bc foobar-1.0-1.spec    ...( to do build stage)
+bash# rpm --short-circuit -bi foobar-1.0-1.spec    ...( to do install stage)
+bash# rpm -ba foobar-1.0-1.spec  ... (to do binary and source package)
+
+New Commands to try:
+
+   mount tmpfs /mnt -t tmpfs (a RAMDisk fs)
+   mount tmpfs /mnt -t tmpfs -o size=32m (max 32 meg)
+   mount --bind / /home/jvarsoke/root  (basically a symlink)
+
+
+
+I don't know if this is very popular but my friend once told me a way to put your syslog messages on a virtual console.
+First make sure that you have the dev for what console you want. (I run RedHat 4.0 and they have them up tty12).
+Then edit your syslog.conf file and add *.* <put a few tabs for format> /dev/tty12. Reboot and TA DA! just hit alt-F12
+and there are you messages logged to a console. 
+
+The best one I have seen is xwpe an excellent clone of Borland's award
+
+
+Try adding an "xsetroot -solid black" to the system xinitrc.  If the
+users have thier own, they should be savy enough to have already fixed
+it themselves.  Also to remove them from Xdm altogether either remove
+the xbanner from its startup file or add your own banner.
+
+                
+
+To put ' Wallpaper in X'
+
+In your /home/user/.xinitrc file  add one of the following:
+
+xv -root -quit  /path_of_your_gif/filename_of_your_gif &
+#tiles the filename using xv
+
+xv -root -max -quit /path_of_your_gif/filename_of_your_gif &
+
+xv -root -maxpect -quit /path/filename &
+#Centered while maintaining aspect ratio
+
+
+## Mouse Device Tester------------------------------------------------
+   xev - shows events
+
+## what program is listening on certain ports
+   netstat --listening --extend --program
+

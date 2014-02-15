@@ -1,0 +1,17 @@
+#mp3
+
+#rip
+   use grip
+
+#cd copy
+   use k3b
+
+#good songs
+(Gordon_Lightfoot) - The_Wreck_Of_The_Edmund_Fitzgerald
+The Nails - 88 Lines about 44 Women
+
+#convert to different kbps
+for f in *.mp3 ; do lame --mp3input -b 128 "$f" "<path_to_destination>/$f" ; done
+
+#convert to 128 bitrate
+for f in *.mp3; do lame --mp3input -b 128 "$f" "$f".n ; rm "$f" ; mv "$f".n "$f" ; done

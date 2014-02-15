@@ -1,0 +1,6 @@
+#foreign IP on your network
+##problem: you have a LAN 192.168.1.*
+##and someone adds a machine 192.168.5.9 to your LAN
+##this is how to route to it
+   ifconfig eth0:1 192.168.10.51 netmask 255.255.255.0 up
+   route add 192.168.10.0 gw 192.168.10.51

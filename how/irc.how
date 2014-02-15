@@ -1,0 +1,43 @@
+##bitchx
+/alias wnq window new double on;query $0;window hide
+
+##tells me what client and OS they are using
+/ctcp handle version
+<DEL> #will toggle ctcp cloaking so people can't get your info
+
+##channels
+   /join 
+   /part #chan <string> #leave the channel
+   CTRL-X to change channels to speak on when listening to multiple
+
+   /msg <user> <string> #for a personal message
+   /msg #chan <string>  #to sent a message to a particular channel
+
+   /query <user> #to start a protracted conversation with someone
+   /query        #to end convo
+
+##windows
+   ALT-#                  # to switch between windows
+   /window <options>      #create a new window
+           double on      #makes the prompt the same as the min window 2lines
+	   hide           #hide the new window, otherwise split screen
+
+	   next           #brings to the next window
+	   prev           #brings to the prev window
+
+	   kill           #kills the window
+
+	   level <option> #to limit the amount of info on the screen
+	         public   # everything said publically including /me
+		 crap     # random crap
+		 msgs     # all private messages
+		 ctcp     # ctcp requests
+		 actions  # ctcp actions sent to you
+		 dcc      # dc information
+		 parts    # doesn't work
+		 joins    # "
+		 help
+		 all
+		 none
+   
+

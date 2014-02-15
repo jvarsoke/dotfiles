@@ -1,0 +1,10 @@
+#fonts I like
+
+
+#openoffice.org
+   Tools->Options->OpenOffice.org->Fonts
+   type in "Andale sans UI" (it's not in the dropdown)
+   and replace "always" with what you want
+
+#gtk (firefox)
+   use gtk-chtheme

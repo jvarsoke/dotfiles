@@ -1,0 +1,5 @@
+##crypto
+
+
+openssl des3 -salt -in infile.txt -out encryptedfile.txt
+openssl des3 -d -salt -in encryptedfile.txt -out normalfile.txt

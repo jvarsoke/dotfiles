@@ -1,0 +1,73 @@
+CVS
+
+Repositiory Root
+   CVSROOT=/usr/local/cvsroot
+   CVSROOT=:pserver:jrandom@cvs.foobar.com:/usr/local/cvs
+
+SourceForge.net ICTK 
+   developer:
+      cvs -z3 -d:ext:jvarsoke@cvs.ictk.sourceforge.net:/cvsroot/ictk
+   anonymous:
+      cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/ictk
+
+To add new file to the CVS
+   $ cvs add [dir]
+   $ cvs add [file]
+   $ cvs add -kb [binary]
+   $ cvs add -ko [text w/ keyword expansion]
+
+To check out code
+   $ cvs -q checkout [files/project]
+   $ cvs -q co [files/project]
+
+To get code from CVS w/o check out
+   $ cvs -q export files/project
+   $ cvs -q export -r "TAG" files/project (to get a specific version)
+
+To update (find out what has changed for server or in workcopies)
+   $ cvs -q up [files]
+
+To get a fresh working copy from the repository
+   $ cvs update -C [files]
+   # note this moves the old working copy to '.#file.revision'
+
+To check in code
+   $ cvs -q commit [files]
+   $ cvs -q ci [files]
+
+To release the code (uncheckout)
+   $ cvs release [files/project]
+   $ cvs release -d [files/project] #deletes your working copies
+
+To Tag a release in CVS (or later snapshot recovery):
+   $ cvs -q tag "Release-2002_12_02_v1_1"   #note no "."
+
+To Remove a tag from a CVS file
+   $ cvs tag -d <TAG> [file]
+
+To get the tagged snapshot:
+   $ cvs checkout -r <TAG> [file/project]
+
+Revert to old copy
+   $ cvs update -j 1.4 -j 1.3 [file]
+
+To Remove a tag (or any 'sticky' info) from working copy:
+   $ cvs -q update -A
+
+Removing Files
+
+Removing a file is similar to adding one, except there's an extra step: You have to remove the file from the working copy first: 
+
+floss$ rm newfile.c
+floss$ cvs remove newfile.c
+cvs remove: scheduling 'newfile.c' for removal
+cvs remove: use 'cvs commit' to remove this file permanently
+floss$ cvs ci -m "removed newfile.c" newfile.c
+Removing newfile.c;
+/usr/local/cvs/myproj/newfile.c,v  <-  newfile.c
+new revision: delete; previous revision: 1.1
+done
+floss$
+
+
+Notice how, in the second and third commands, we name newfile.c explicitly even though it doesn't exist in the working copy anymore. Of course, in the commit, you don't absolutely need to name the file, as long as you don't mind the commit encompassing any other modifications that may have taken place in the working copy. 

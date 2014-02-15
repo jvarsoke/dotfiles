@@ -1,0 +1,30 @@
+##Crypto Filesystem
+
+##loop-aes
+   uname -r
+   apt-get install kernel-headers-2.6.8-1-386 #whatever kernel
+   apt-get install module-assistant loop-aes-source
+   module-assistant prepare
+   module-assistant build loop-aes
+   apt-get install loop-aes-utils
+   module-assistant install loop-aes
+
+   #test it (volume is the filename of the loopback, could be foo)
+   dd if=/dev/zero of=volume bs=4k count=1280
+   losetup -e AES128 /dev/loop1 volume
+   mkfs -t ext2 /dev/loop1
+   losetup -d /dev/loop1
+   mkdir /mnt/secure
+   mount volume -o loop=/dev/loop1,encryption=AES128 /mnt/secure/ -t ext2
+
+   #auto generate a 20char password
+   head /dev/urandom | md5sum | awk '{print $1}'
+
+   #fstab
+   /path/to/volume     /mnt/secure/       ext2    loop=/dev/loop1,encryption=AES128,user,noauto,rw       0       0
+
+   #errors
+   if you get: ioctl: LOOP_SET_FD: Device or resource busy
+   it is because that loopback is busy, try /dev/loop2 or something
+   losetup -a shows what is in use
+

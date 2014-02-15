@@ -1,0 +1,3 @@
+###
+  When (pop mylist), where does the popped value go? (result list is returned)
+

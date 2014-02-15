@@ -31,13 +31,12 @@ function do_usage() {
 
 # do_install ----------------------------------------------------------------
 function do_install() {
-	#list of files we want to symlink with a leading dot
 	setup_links
 	setup_folders
 }
 
 function setup_links() {
-	echo "Install Links ${links[@]}"
+	#echo "Install Links ${links[@]}"
 	for s in ${links[@]}; do
 		src=$DOTFILES/${s}
 		tgt=$HOME/${s}

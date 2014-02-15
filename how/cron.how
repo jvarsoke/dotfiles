@@ -1,0 +1,37 @@
+Each cron command has 5 time and date fields, followed by a user name, and if
+this is the system crontab file, it will be followed by a command.  Commands are
+executed when the time specified by the time/date fields matches the
+current time.
+
+              field          allowed values
+              -----          --------------
+              minute         0-59
+              hour           0-23
+              day of month   0-31
+              month          0-12 (or names, see below)
+              day of week    0-7 (0 or 7 is Sun, or use names)
+
+A  field  may  be an asterisk (*), which always stands for ``first to
+last''.  So used in the hour field, it means 'every hour from 00:00 to
+24:00"
+
+  
+
+Example Crontab:
+
+#      r----minute
+#      |  r-----hour
+#      |  |  r------day of the month
+#      |  |  |  r------month
+#      |  |  |  |  r------day of the week
+#      |  |  |  |  |     |------ command to run ------------->
+#      |  |  |  |  |     |
+       5  0  *  *  *       $HOME/bin/daily.job >> $HOME/tmp/out 2>&1
+# run five minutes after midnight, every day
+       15 14 1  *  *     $HOME/bin/monthly
+
+# run at 2:15pm on the first of every month -- output mailed to paul
+       0  22 *  *  1-5   mail -s "It's 10pm" joe%Joe,%%Where are your kids?%
+
+# print out the message at 4:05 every sunday.
+       5  4  *  *  sun     echo "run at 5 after 4 every sunday"
