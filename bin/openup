@@ -1,0 +1,5 @@
+#!/bin/bash
+
+test $# == 0 && echo in $0: need param && exit 1
+find "$1" -type d -exec chmod 755 {} \;
+find "$1" -type f -exec chmod 644 {} \;

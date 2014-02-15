@@ -1,0 +1,55 @@
+#!/bin/bash
+
+#sync home directory between underwood and shadowbox
+
+export RSYNC_RSH=/usr/bin/ssh
+export RSYNC=/usr/bin/rsync
+
+RSYNC_OPTS="-Cauvze ssh --progress"
+EXCLUDES="--exclude *.o"
+
+#help
+usage () {
+	echo
+	echo "usage: $0 <home|work>"
+	echo
+	exit 1
+}
+
+do_sync () {
+	#local->remote
+	${RSYNC} ${RSYNC_OPTS} ${EXCLUDES} ${LOCALDIR} ${REMOTEUSER}@${REMOTEHOST}:${REMOTEDIR}
+	#remove->local
+	${RSYNC} ${RSYNC_OPTS} ${EXCLUDES} ${REMOTEUSER}@${REMOTEHOST}:${REMOTEDIR} ${LOCALDIR}
+	exit 0
+}
+
+# main ##########################################################
+
+#detect right number of arguments
+#if [ $# -lt 1 ]
+#then
+#	usage
+#fi
+
+REMOTEUSER=${USER}
+LOCALDIR=${HOME}/
+REMOTEDIR=.
+
+case $HOSTNAME in
+'underwood')
+	REMOTEHOST=shadowbox
+	do_sync
+	;;
+
+'shadowbox')
+	REMOTEHOST=underwood
+	do_sync
+	;;
+'*')
+	usage
+	exit 1
+	;;
+esac
+
+exit 0

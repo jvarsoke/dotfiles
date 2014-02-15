@@ -32,7 +32,7 @@ function do_usage() {
 # do_install ----------------------------------------------------------------
 function do_install() {
 	#list of files we want to symlink with a leading dot
-	#setup_links
+	setup_links
 	setup_folders
 }
 
@@ -51,15 +51,15 @@ function setup_links() {
 				[[ $VERBOSE ]] && echo "Skipping: $tgt already linked to $lnk"
 			fi
 		elif [ -f $tgt ] ; then
-			echo "Skipping: File already exists: $tgt"
+			echo "Skipping: Real file already exists: $tgt"
 		else
-			echo "ln -s $src $tgt"
+			ln -s $src $tgt
 		fi
 	done
 }
 
 function setup_folders() {
-	echo "Installing files in folders: ${folders[@]}"
+	#echo "Installing files in folders: ${folders[@]}"
 	for d in ${folders[@]}; do
 		d=${d%?}
 		files=($d/!(*swp|.gitignore|core))
@@ -80,10 +80,12 @@ function setup_folders() {
 			else
 				if [ -f "$HOME/$d" ] ; then
 					echo "Error: non-directory file $HOME/$d exists"
-				elif [ ! -d "$HOME/$d" ] ; then
-					echo "Making $HOME/$d"
+				else
+					if [ ! -d "$HOME/$d" ] ; then
+						mkdir -p $HOME/$d
+					fi
+					ln -s $src $tgt
 				fi
-				echo "ln -s $src $tgt"
 			fi
 		done
 	done
@@ -112,12 +114,4 @@ case "$1" in
 		;;
 esac
 
-
 popd > /dev/null
-
-
-
-
-
-
-

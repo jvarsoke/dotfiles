@@ -3,7 +3,7 @@
 colors=$(tput colors)
 
 if (($colors >= 256)) ; then
-	echo "got colors"
+	: #echo "got colors"
 fi
 
 # ANSI CODES - SEPARATE MULTIPLE VALUES WITH ;

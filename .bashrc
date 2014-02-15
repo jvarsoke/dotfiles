@@ -46,11 +46,12 @@ umask 022
 export PS1="\h% "
 unset  MAILCHECK
 export MAILCHECK
-export LESS='X'
+export LESS='-IEX'
 export EDITOR='vim'
 export SVN_EDITOR=vim
 export DISPLAY PS2
 export MAIL='/home/jvarsoke/mail/INBOX'
+export PAGER='less'
 
 ##libraries
 

@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+
+HOW_DIR=$HOME/how
+EXT=".how"
+
+[ -z $PAGER ] && PAGER='cat'
+[ -z $EDITOR ] && EDITOR='vim'
+
+function do_usage() {
+	echo "Usage: $0 -h help, -a edit, no-arg cat"
+	exit
+}
+
+function do_cat() {
+	echo looking for "$HOW_DIR/$1$EXT"
+	[ -z $1 ] && do_usage
+	[ ! -f "$HOW_DIR/$1$EXT" ] && echo "Couldn't find howfile: $1$EXT" && exit 1
+
+	exec $PAGER "$HOW_DIR/$1$EXT"
+}
+
+function do_edit() {
+	[[ -z $1 ]] && do_usage
+	exec $EDITOR "$HOW_DIR/$1$EXT"
+}
+
+function do_search() {
+	[[ -n $1 ]] && do_usage
+	echo searching for $1
+}
+
+function do_list() {
+	for file in $HOW_DIR/$1*$EXT; do
+		filename="${file##*/}"
+		printf "%-8s\n" "${filename%$EXT}"
+	done | column
+}
+
+# Main ----------------------------------------------------------------------
+operation="cat"
+while getopts ":ahsl" opt; do
+	case $opt in
+		a)
+			operation=edit
+			;;
+		h)
+			do_usage
+			;;
+		s)
+			operation=search
+			;;
+		l)
+			operation=list
+			;;
+		\?)
+			echo "Invalid option: -$OPTARG" >&2
+			exit 1
+			;;
+	esac
+done
+
+shift $((OPTIND-1))
+
+arg=$1
+case $operation in
+	edit)
+		do_edit $arg
+		;;
+	list)
+		do_list $arg
+		;;
+	search)	
+		do_search $arg
+		;;
+	cat)
+		do_cat $arg
+		;;
+	list)
+		do_list $arg
+		;;
+esac

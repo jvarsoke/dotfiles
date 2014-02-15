@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+# 2003-05-25 jjv - changed compress to bz2
+my $foo = shift;
+
+if ($foo eq '-R') {
+   $stuff = '.';
+   $descrip = shift; 
+} else {
+   $stuff = '*';
+   $descrip = $foo;
+}
+
+$cwd         = $ENV{PWD};
+$home        = $ENV{HOME};
+$backup_base = $home . "/backup";
+
+$cwd =~ /$home/;
+@sub_dirs = split('/', $');
+
+$backup_dir = $backup_base;
+foreach $sub (@sub_dirs) {
+   $backup_dir .= $sub . "/";
+   if (not -d $backup_dir) {
+      my $rc = mkdir $backup_dir, oct('0700');
+      die ($!) if (!$rc);
+   }
+}
+
+($sec,$min, $hour, $mday, $mon, $year) = localtime(time);
+$tarfile = sprintf("%s%02d%02d%02d_%02d%02d%s%s.tar",
+                    $backup_dir,
+                    $year+1900, $mon+1, $mday, $hour, $min,
+                    (($stuff eq '.') ? "R" : ""),
+                    (($descrip) ? "_$descrip" : ""));
+
+my $cmd = "tar cfj $tarfile.bz2 $stuff";
+my $rc = system($cmd);
+$rc /= 256;
+die ("backup error($rc): $!\n") if ($rc != 0);
+exit(0);
