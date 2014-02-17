@@ -21,7 +21,7 @@ fi
 #export TERM=rxvt-unicode-256color
 
 #encourage xterms to announce their colors
-if [ "$COLORTERM" == "gnome-terminal" ] || [ "$COLORTERM" == "xfce4-terminal"]
+if [ "$COLORTERM" == "gnome-terminal" ] || [ "$COLORTERM" == "xfce4-terminal" ]
 then
 	TERM=xterm-256color
 elif [ "$COLORTERM" == "rxvt-xpm" ]
@@ -269,3 +269,5 @@ alias sts="/opt/springsource/sts-2.9.0.RELEASE/STS"
 for file in ~/.bashrc.d/*.sh; do
 	source "$file"
 done
+
+alias vi=vim
