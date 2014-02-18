@@ -2,9 +2,9 @@
 
 colors=$(tput colors)
 
-if (($colors >= 256)) ; then
+#if (($colors >= 256)) ; then
 	: #echo "got colors"
-fi
+#fi
 
 # ANSI CODES - SEPARATE MULTIPLE VALUES WITH ;
 #

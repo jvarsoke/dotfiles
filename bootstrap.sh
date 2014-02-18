@@ -31,8 +31,13 @@ function do_usage() {
 
 # do_install ----------------------------------------------------------------
 function do_install() {
+	test_dependencies()
 	setup_links
 	setup_folders
+}
+
+function test_dependencies() {
+	[[ hash tset ]] && echo "No tset: maybe install ncurses (cygwin)?"
 }
 
 function setup_links() {
