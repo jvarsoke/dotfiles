@@ -18,6 +18,12 @@ Once that is taken care of re-run the git clone and do this:
 ``` bash
 
 $ ~/.dotfiles/bootstrap.sh
+$  git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+```
+
+inside VIM
+```
+: BundleInstall
 
 ```
 
