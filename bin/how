@@ -28,16 +28,16 @@ EOM
 
 function do_cat() {
 	[ -z $1 ] && do_usage
-	$1=${1%$EXT} #remove extenion if provided
-	[ ! -f "$HOW_DIR/$1$EXT" ] && echo "Couldn't find howfile: $1$EXT" && exit 1
+	topic=${1%$EXT} #remove extenion if provided
+	[ ! -f "$HOW_DIR/$topic$EXT" ] && echo "Couldn't find howfile: $topic$EXT" && exit 1
 
-	exec $PAGER "$HOW_DIR/$1$EXT"
+	exec $PAGER "$HOW_DIR/$topic$EXT"
 }
 
 function do_edit() {
 	[[ -z $1 ]] && do_usage
-	$1=${1%$EXT} #remove extenion if provided
-	exec $EDITOR "$HOW_DIR/$1$EXT"
+	$topic=${1%$EXT} #remove extenion if provided
+	exec $EDITOR "$HOW_DIR/$topic$EXT"
 }
 
 #TODO: remove .how from the results
