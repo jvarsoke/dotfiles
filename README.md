@@ -6,6 +6,17 @@ My configuration files for unix-like places of worship.
 ``` bash
 $ git clone git@github.com:jvarsoke/dotfiles.git ~/.dotfiles
 
+```
+If you receive:
+``` bash
+Permission denied (publickey).
+fatal: The remote end hung up unexpectedly
+```
+You need to add your ssh key to github (https://help.github.com/articles/generating-ssh-keys)
+
+Once that is taken care of re-run the git clone and do this:
+``` bash
+
 $ ~/.dotfiles/bootstrap.sh
 
 ```
