@@ -72,7 +72,7 @@ function prompt_command() {
   PS1=""
   case $TERM in 
 	  xterm*)
-		  PS1="\[\033]0;\u@\h: \w\007\]"
+		  PS1="\[\033]0;\w\007\]"
 		  ;;
   esac
   # svn: [repo:lastchanged]
