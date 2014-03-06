@@ -70,6 +70,11 @@ function prompt_svn() {
 function prompt_command() {
   local exit_code=$?
   PS1=""
+  case $TERM in 
+	  xterm*)
+		  PS1="\[\033]0;\u@\h: \w\007\]"
+		  ;;
+  esac
   # svn: [repo:lastchanged]
   PS1="$PS1$(prompt_svn)"
   # git: [branch:flags]
