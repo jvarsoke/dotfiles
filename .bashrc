@@ -83,15 +83,15 @@ PATH=$PATH:/home/jvarsoke/apl/as3/runtimes/player/11.1/lnx
 
 #PATH="$PATH:/usr/local/jdk/bin"          #jdk current version
 #PATH="$PATH:/usr/local/j2sdkee1.2.1/bin" #java enterprise edition
-PATH="$PATH:/usr/local/ant/bin"          #ant builder
-PATH="$PATH:/usr/local/eclipse"          #eclipse
+#PATH="$PATH:/usr/local/ant/bin"          #ant builder
+#PATH="$PATH:/usr/local/eclipse"          #eclipse
 
 ##java aps
-export ANT_HOME="/usr/local/ant"
-export JUNIT_HOME="/usr/share/java"
-export XALAN_HOME="/usr/share/java"
-export XERCES_HOME="/usr/share/java"
-export CLOVER_HOME="/home/jvarsoke/lib/clover/clover-ant-1.3.13/lib"
+#export ANT_HOME="/usr/local/ant"
+#export JUNIT_HOME="/usr/share/java"
+#export XALAN_HOME="/usr/share/java"
+#export XERCES_HOME="/usr/share/java"
+#export CLOVER_HOME="/home/jvarsoke/lib/clover/clover-ant-1.3.13/lib"
 
 CLASSPATH="."
 CLASSPATH="$CLASSPATH:$HOME/lib/java"

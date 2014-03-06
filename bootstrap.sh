@@ -26,18 +26,28 @@ links=(.!(.||*swp|gitignore|git))
 
 # do_usage ------------------------------------------------------------------
 function do_usage() {
-	echo "Usage: $0 [install|update|clean]"
+	echo "Usage: $0 [install|update|test|clean]"
+}
+
+# do_test -------------------------------------------------------------------
+# tests whether common tools are installed
+function do_test() {
+	test_dependencies
+	[ hash ack 2>/dev/null ] && echo "ack: not found (http://beyondgrep.com/install/)"
+	[ hash ant 2>/dev/null ] && echo "ant: couldn't find Ant in path"
+	[ hash lein 2>/dev/null ] && echo "lein: install leiningen (http://leiningen.org/)"
 }
 
 # do_install ----------------------------------------------------------------
 function do_install() {
-	test_dependencies()
+	test_dependencies
 	setup_links
 	setup_folders
 }
 
 function test_dependencies() {
-	[[ hash tset ]] && echo "No tset: maybe install ncurses (cygwin)?"
+	[ hash tset 2>/dev/null ] && echo "No tset: maybe install ncurses (cygwin)?"
+	[ hash column 2>/dev/null ] && echo "No column: install util-linux (cygwin)?"
 }
 
 function setup_links() {
@@ -108,6 +118,9 @@ case "$1" in
 		;;
 	clean)
 		do_clean
+		;;
+	test)
+		do_test
 		;;
 	update)
 		echo "Update not available yet";
