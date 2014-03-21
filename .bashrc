@@ -88,15 +88,15 @@ PATH=$PATH:/home/jvarsoke/apl/as3/runtimes/player/11.1/lnx
 
 ##java aps
 #export ANT_HOME="/usr/local/ant"
-#export JUNIT_HOME="/usr/share/java"
+export JUNIT_HOME="$HOME/lib/java/junit"
 #export XALAN_HOME="/usr/share/java"
 #export XERCES_HOME="/usr/share/java"
-#export CLOVER_HOME="/home/jvarsoke/lib/clover/clover-ant-1.3.13/lib"
+export CLOVER_HOME="$HOME/lib/clover/clover-ant-1.3.13/lib"
 
 CLASSPATH="."
 CLASSPATH="$CLASSPATH:$HOME/lib/java"
+CLASSPATH="$CLASSPATH:$HOME/lib/ictk"
 CLASSPATH="$CLASSPATH:$HOME/lib/java/timesealing.jar"
-CLASSPATH="$CLASSPATH:$JUNIT_HOME/junit.jar"
 CLASSPATH="$CLASSPATH:$JUNIT_HOME/junit.jar"
 CLASSPATH="$CLASSPATH:$CLOVER_HOME/clover.jar"
 #CLASSPATH="$CLASSPATH:$XALAN_HOME/bin/xalan.jar"
@@ -106,13 +106,13 @@ CLASSPATH="$CLASSPATH:$CLOVER_HOME/clover.jar"
 #CLASSPATH="$CLASSPATH:$XALAN_HOME/bin/bsf.jar"
 #CLASSPATH="$CLASSPATH:$XERCES_HOME/xercesSamples.jar"
 #CLASSPATH="$CLASSPATH:$XERCES_HOME/xercesImpl.jar"
-CLASSPATH="$CLASSPATH:$HOME/lib/java/mysql-connector-java-3.0.8-stable-bin.jar"
+#CLASSPATH="$CLASSPATH:$HOME/lib/java/mysql-connector-java-3.0.8-stable-bin.jar"
 #CLASSPATH="$CLASSPATH:/usr/local/jwsdp/common"
 #CLASSPATH="$CLASSPATH:/usr/local/j2sdkee1.2.1/lib/j2ee.jar"   ##Enterprise Beans
 export CLASSPATH
 #alias xmltrans='java org.apache.xalan.xslt.Process'
-XALAN="/usr/local/xalan/bin"
-alias xmltrans='java -Xbootclasspath/p:$XALAN/xalan.jar:$XALAN/xml-apis.jar:$XALAN/xercesImpl.jar org.apache.xalan.xslt.Process'
+#XALAN="/usr/local/xalan/bin"
+#alias xmltrans='java -Xbootclasspath/p:$XALAN/xalan.jar:$XALAN/xml-apis.jar:$XALAN/xercesImpl.jar org.apache.xalan.xslt.Process'
 
 #mk() { eval ${1:-MKPWD}=\`pwd`\; } 
 #rt() { eval cd \\$${1:-MKPWD}\;pwd; }

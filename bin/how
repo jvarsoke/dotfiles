@@ -36,7 +36,7 @@ function do_cat() {
 
 function do_edit() {
 	[[ -z $1 ]] && do_usage
-	$topic=${1%$EXT} #remove extenion if provided
+	topic=${1%$EXT} #remove extenion if provided
 	exec $EDITOR "$HOW_DIR/$topic$EXT"
 }
 
