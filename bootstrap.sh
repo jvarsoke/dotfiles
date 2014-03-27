@@ -35,7 +35,9 @@ function do_test() {
 	test_dependencies
 	[ hash ack 2>/dev/null ] && echo "ack: not found (http://beyondgrep.com/install/)"
 	[ hash ant 2>/dev/null ] && echo "ant: couldn't find Ant in path"
+	[ hash mvn 2>/dev/null ] && echo "mvn: couldn't find Maven in path"
 	[ hash lein 2>/dev/null ] && echo "lein: install leiningen (http://leiningen.org/)"
+	[ hash xmllint 2>/dev/null ] && echo "xmllint: not found (libxml2-utils package)"
 }
 
 # do_install ----------------------------------------------------------------

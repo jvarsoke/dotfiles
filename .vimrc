@@ -86,7 +86,7 @@ let g:NERDTreeWinPos = "right"
 "----------------------------------------------------------------------------
 set hlsearch                    "highlights last searched item
 set ignorecase			"case insensitive search
-"set incsearch			"incrementally match the search
+set noincsearch			"incrementally match the search
 
 " When the page starts to scroll, keep the cursor 8 lines from the top and 8
 " lines from the bottom

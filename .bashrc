@@ -91,7 +91,7 @@ PATH=$PATH:/home/jvarsoke/apl/as3/runtimes/player/11.1/lnx
 export JUNIT_HOME="$HOME/lib/java/junit"
 #export XALAN_HOME="/usr/share/java"
 #export XERCES_HOME="/usr/share/java"
-export CLOVER_HOME="$HOME/lib/clover/clover-ant-1.3.13/lib"
+export CLOVER_HOME="$HOME/lib/clover/clover-ant-3.2.2/lib"
 
 CLASSPATH="."
 CLASSPATH="$CLASSPATH:$HOME/lib/java"
