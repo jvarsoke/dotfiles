@@ -99,10 +99,18 @@ set wildignore+=*.o,*.class,*.git,*.svn,*.class
 au BufWinLeave * mkview
 au BufWinEnter * silent loadview
 
+" don't know why, everyone seems to like 4.  I like 3.
+set shiftwidth=4
+set expandtab
+set autoindent
+" let backspace delete indent
+set softtabstop=4
+
 "turn off for Makefiles and python
 autocmd FileType make setlocal noexpandtab 
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 " the command 'retab' will fix a file
+au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 
 " detect the filetype from the shebang-line
 autocmd BufNewFile,BufRead * filetype detect

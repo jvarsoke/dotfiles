@@ -21,3 +21,6 @@ wip/stuff
 
 #add "co" as an alias for "checkout"
 git config --global alias.co checkout
+
+#to undo changes (before commit)
+   $ git checkout -- <filename>
