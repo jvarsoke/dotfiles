@@ -38,6 +38,7 @@ function do_test() {
 	[ hash mvn 2>/dev/null ] && echo "mvn: couldn't find Maven in path"
 	[ hash lein 2>/dev/null ] && echo "lein: install leiningen (http://leiningen.org/)"
 	[ hash xmllint 2>/dev/null ] && echo "xmllint: not found (libxml2-utils package)"
+	[ hash tmux 2>/dev/null ] && echo "tmux: not found"
 }
 
 # do_install ----------------------------------------------------------------

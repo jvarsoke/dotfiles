@@ -73,6 +73,7 @@ PATH="$PATH:/usr/local/bin"
 PATH="$PATH:/usr/X11R6/bin"
 PATH="$PATH:/usr/games"
 PATH="$PATH:/usr/local/nvu"
+PATH="$PATH:$HOME/apl/android-studio/bin"
 
 ##ActionScript3
 PATH=$PATH:/home/jvarsoke/apl/as3/bin
@@ -271,3 +272,6 @@ for file in ~/.bashrc.d/*.sh; do
 done
 
 alias vi=vim
+
+PERL_MB_OPT="--install_base \"/home/jvarsoke/apl/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/jvarsoke/apl/perl5"; export PERL_MM_OPT;

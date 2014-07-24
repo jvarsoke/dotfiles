@@ -24,3 +24,17 @@ git config --global alias.co checkout
 
 #to undo changes (before commit)
    $ git checkout -- <filename>
+
+#clone just one branch
+   git clone -b mybranch --single-branch git://sub.domain.com/repo.git
+
+#which files have changed between branches
+   git diff --name-status master..branch
+
+#convert a folder to git
+   cd <localdir>
+   git init
+   git add .
+   git commit -m 'message'
+   git remote add origin <url>
+   git push -u origin master

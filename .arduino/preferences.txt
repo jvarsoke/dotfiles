@@ -72,6 +72,6 @@ sketchbook.path=/home/jvarsoke/sketchbook
 target=arduino
 update.check=true
 update.id=-207183257495360327
-update.last=1396312845015
+update.last=1396911137091
 upload.using=bootloader
 upload.verify=true

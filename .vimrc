@@ -106,6 +106,11 @@ set autoindent
 " let backspace delete indent
 set softtabstop=4
 
+" vsplit opens windows to the right of the current
+set splitright
+" vsplit opens windows below the current
+set splitbelow
+
 "turn off for Makefiles and python
 autocmd FileType make setlocal noexpandtab 
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
