@@ -1,0 +1,7 @@
+##mailcap---------------------------------------------------------------------
+text/html      ; iceweasel -remote 'openURL(%s,new-page)'
+image/gif      ; xzgv %s
+image/jpg      ; xzgv %s
+image/*        ; xzgv %s
+application/pdf; acroread %s
+#application/pgp-keys; pgp -f < %s ; copiousoutput

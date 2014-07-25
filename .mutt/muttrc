@@ -1,0 +1,177 @@
+##Muttrc
+##j. varsoke
+
+##MTA info
+source ~/.mutt/mta.rc
+
+##id info and other stuff
+source ~/.mutt/personal.rc
+
+# PINE has different defaults for this variables
+set   folder=~/mail
+set   record=+sent-mail
+set   postponed=+postponed-msgs
+set   mbox=~/mail/INBOX
+
+####maildir configuration
+#set   mask=!^\\.[^.]
+#set   record=+.Sent
+#set   postponed=+.Drafts
+#set   spoolfile=~/Maildir
+#set   mbox_type=Maildir
+#set   mbox=~/Maildir
+#mailboxes `echo -n "+ "; find ~/Maildir -type d -name ".*" -printf "+'%f' "`
+
+#macro index c "<change-folder>?<toggle-mailboxes>" "open a different folder"
+#macro pager c "<change-folder>?<toggle-mailboxes>" "open a different folder"
+
+#macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+#macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+
+#macro compose A "<attach-message>?<toggle-mailboxes>" "attach message(s) to this message"
+
+##aliases---------------------------------------------------------------------
+set   sort_alias=unsorted
+set   alias_file=~/.mutt/aliases
+source ~/.mutt/aliases_pine      # copy of pine's .addressbook
+source ~/.mutt/aliases
+
+##mailing lists---------------------------------------------------------------
+source ~/.mutt/lists
+
+##headers---------------------------------------------------------------------
+ignore *
+unignore from: date subject to cc
+unignore user-agent x-mailer x-spamgourmet
+hdr_order date from to cc subject
+
+
+##options---------------------------------------------------------------------
+set   editor="nano -tz"
+set   abort_nosubject=no        # Let me send messages with an empty sub
+set   abort_unmodified=no       # Let me send empty messages
+
+set   mail_check=3              # how often to poll for new mail
+set   timeout=10		# how long after last key pressed to check mail
+set   nomove                    # don't move the spool to mbox
+unset mark_old                  # marking old unseen messages
+set   sort=date-received
+set   nosave_name
+set   ascii_chars               # use ASCII instead of ACS chars for threads
+#set   autoedit                 # go to the editor right away when composing
+set   copy=yes                  # always save a copy of outgoing messages
+set   edit_headers              # let me edit the message header when composing
+set   askcc                     # Ask me about CCs
+set   fast_reply                # skip initial prompts when replying
+set   include                   # always include messages when replying
+unset metoo                     # remove my address when replying
+set   followup_to               # Create Mail-Followup-To header
+set   honor_followup_to		# honor it for others
+set   forward_decode            # Decode messages when forwarding.
+set   forward_format="Fwd: %s"
+
+set   confirmcreate             # Ask me about creating new files
+unset confirmappend             # Don't ask me about appending to files
+set   delete=yes                # Don't bother me 
+set   fcc_attach=no             # keep attachments in copies of sent messages?
+set   fcc_clear                 # Store local copies of messages in the clear.
+#set   write_bbc=no		# hide the BBC field from recipiants
+
+set   pager_index_lines=0       # how many index lines to show in the pager
+set   pager_stop		# don't move to the next message on next-page
+set   smart_wrap                # Try to be smart when wrapping
+unset markers			# don't mark 80+ char lines with +
+set   print=ask-no		# ask me if I really want to print messages
+set   print_command=lpr
+set   read_inc=0                # show progress when reading a mailbox
+set   recall=ask-no             # prompt to recall postponed messages
+set   reply_to                  # always use reply-to if present
+set   reverse_alias             # corrilate aliases with email for index
+set   reverse_name              # use my address as it appears in the message
+                                # i am replying to
+				# this might be good for spamgourmet.com
+unset   save_name               # Save copies by name.  
+                                # Together with $record and $save_name,
+                                # this means that when a folder exists, 
+				# copies of outgoing messages are written 
+				# to +<name>, otherwise they go to
+				# +sent-mail
+
+set   status_on_top             # some people prefer the status bar on top
+set   ascii_chars		# use ascii for thread -->
+set   nohelp
+unset beep
+set   beep_new
+set   keep_flagged              # don't move flagged messages to mbox
+set   notilde			# no ~ for space at end
+set   wait_key=no		# don't pause after external call
+
+set   use_from			# for some reason needed in 1.5
+
+##mailcap---------------------------------------------------------------------
+set mailcap_path=~/.mutt/mailcap
+
+# aliases for broken MUAs
+charset-hook US-ASCII     ISO-8859-1
+charset-hook x-unknown    ISO-8859-1
+
+##gpg-------------------------------------------------------------------------
+#source ~/.mutt/gpg.rc
+set   forward_decrypt           # Decrypt messages when forwarding.
+set   pgp_replyencrypt          # Encrypt when replying to encrypted messages.
+set   pgp_replysignencrypted    # Sign when replying to encrypted messages.
+set   pgp_show_unusable="no"    # Don't display unusable keys.
+set   pgp_sort_keys="keyid"     # Sort keys by key ID
+set   pgp_replysign             # Sign when replying to signed messages.
+set   pgp_timeout=3600          # Forget the PGP passphrase after an hour.
+
+##menu-traditional patch
+#set   pgp_autoinline=no         # will attempt to send traditional
+#set   pgp_replyinline=yes       # try to reply inline if sent inline
+
+##bindings--------------------------------------------------------------------
+bind   index     x        sync-mailbox
+bind   index     t        create-alias
+bind   index     R        group-reply
+bind   index     t        create-alias
+bind   index     <space>  next-page
+bind   index     <up>     previous-entry
+bind   index     <down>   next-entry
+bind   index     n        next-entry
+macro  index     ,        "c?<tab>"
+macro  index     <left>   "c?<tab>"
+macro  index     \ea      "!vi ~/.mutt/aliases\n:source ~/.mutt/aliases\n"
+macro  index     \eb      "!vi ~/.mutt/aliases_pine\n:source ~/.mutt/aliases_pine\n"
+
+bind   pager     n        next-undeleted
+bind   pager     p        previous-entry
+bind   pager     <up>     previous-line
+bind   pager     <down>   next-line
+bind   pager     ,        exit
+bind   pager     <left>   exit
+bind   pager     R        group-reply
+
+bind   browser   i        exit
+bind   browser   ,        exit
+
+bind   attach    i        exit
+bind   attach    ,        exit
+
+##colors----------------------------------------------------------------------
+color normal       white         black
+color hdrdefault   brightwhite         black
+color quoted       brightblack   black
+color signature    yellow        black
+color message      brightwhite   black
+color attachment   magenta       black
+color search       brightyellow  black
+color tree         cyan          black
+color status       black         white
+color indicator    black         white
+color error        brightred     black
+
+color header       brightblack black ^User-Agent:
+color header       brightblack black ^X-Mailer:
+color header       brightblack black ^X-Spamgourmet:
+color body         white  black "(ftp|https?|mailto)://[^ ]+" # point out URLs
+color body         white  black [-a-z_0-9.]+@[-a-z_0-9.]+ # e-mail addresses

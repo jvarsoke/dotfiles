@@ -1,0 +1,3 @@
+#muttrc
+#sendmail from underwood
+#set	sendmail='/usr/bin/msmtp'
