@@ -42,15 +42,13 @@ fi
 umask 022
 
 #history -c
-#allow less to read .gz files etc
-eval "$(lesspipe)"
 
 ##source all the files in the bash directory that are .sh
-for file in ~/.bashrc.d/*.sh; do
+for file in $HOME/.bashrc.d/*.sh; do
 	source "$file"
 done
 
 ##source all the files in the bash directory that are .sh
-for file in ~/.bashrc.d/*/*.sh; do
+for file in $HOME/.bashrc.d/local/*.sh; do
 	source "$file"
 done

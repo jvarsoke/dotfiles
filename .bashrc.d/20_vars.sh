@@ -12,17 +12,28 @@ export MAIL='/home/jvarsoke/mail/INBOX'
 export PAGER='less'
 export GIT_PAGER=cat
 
-##libraries
 
+##OS-Specific: Linux
+if [ "$OSTYPE" = "linux-gnu" ]; then
+    :
+elif [ "$OSTYPE" = "cygwin" ]; then
+    PYTHON_HOME='/cygdrive/c/Users/jvarsoke/AppData/Local/Programs/Python/Python36/'
+else
+    echo "Unknown OS Type = '$OSTYPE'"
+fi
+
+
+
+##libraries
 LD_LIBRARY_PATH="/usr/lib"
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/sane"
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu"
-export LD_LIBRARY_PATH
 
 ##path
 PATH="$HOME/bin"
-PATH="$PATH:$HOME/apl/scid/scid-4.3"
+
+PATH=$PATH:$PYTHON_HOME
 
 PATH="$PATH:/bin"
 PATH="$PATH:/usr/bin"
@@ -33,6 +44,7 @@ PATH="$PATH:/usr/X11R6/bin"
 PATH="$PATH:/usr/games"
 PATH="$PATH:/usr/local/nvu"
 PATH="$PATH:$HOME/apl/android-studio/bin"
+PATH="$PATH:$HOME/apl/scid/scid-4.3"
 
 ##ActionScript3
 PATH=$PATH:/home/jvarsoke/apl/as3/bin
@@ -69,7 +81,7 @@ CLASSPATH="$CLASSPATH:$CLOVER_HOME/clover.jar"
 #CLASSPATH="$CLASSPATH:$HOME/lib/java/mysql-connector-java-3.0.8-stable-bin.jar"
 #CLASSPATH="$CLASSPATH:/usr/local/jwsdp/common"
 #CLASSPATH="$CLASSPATH:/usr/local/j2sdkee1.2.1/lib/j2ee.jar"   ##Enterprise Beans
-export CLASSPATH
+
 #alias xmltrans='java org.apache.xalan.xslt.Process'
 #XALAN="/usr/local/xalan/bin"
 #alias xmltrans='java -Xbootclasspath/p:$XALAN/xalan.jar:$XALAN/xml-apis.jar:$XALAN/xercesImpl.jar org.apache.xalan.xslt.Process'
@@ -86,3 +98,13 @@ function calc
         echo "scale=2 ; $*" | sed -e "s:x:*:g" | sed -e "s:,::g" | bc
 }
 
+if hash lesspipe 2>/dev/null ; then
+    eval $(lesspipe)
+else
+    :
+fi
+
+
+export PATH
+export CLASSPATH
+export LD_LIBRARY_PATH
