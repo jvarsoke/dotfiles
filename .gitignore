@@ -1,2 +1,3 @@
-private/*.sh
+.bashrc.d/local/*.sh
+private.sh
 *.swp
