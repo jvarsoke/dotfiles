@@ -10,32 +10,42 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" required!
+Plugin 'gmarik/vundle'
 
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PluginList          - list configured bundles
+" :PluginInstall(!)    - install(update) bundles
+" :PluginSearch(!) foo - search(or refresh cache first) for foo
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 
 " Bundles-----------------------------
-Bundle 'tpope/vim-sensible'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-sensible'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdcommenter'
+Plugin 'ntpeters/vim-better-whitespace'
 "Bundle 'kein/ctrlp.vim'
 "Bundle 'scrooloose/syntastic'
+"
 "---clojure stuff---
-Bundle 'tpope/vim-fireplace'
-Bundle 'tpope/vim-classpath'
-Bundle 'guns/vim-clojure-static'
-Bundle 'kien/rainbow_parentheses.vim'
+"Plugin 'tpope/vim-fireplace'
+"Plugin 'tpope/vim-classpath'
+Plugin 'guns/vim-clojure-static'
+Plugin 'kien/rainbow_parentheses.vim'
+
+
+"?- don't work Bundle 'Valloric/YouCompleteMe'
+"Bundle 'valloric/YouCompleteMe' doesn't really have a bundle 
+    "(BACKUP-not necessary) git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
+    "cd ~/.vim/bundle/YouCompleteMe
+    "./install.sh --clang-completer
 
 " Bundles:color-----------------------
-Bundle 'vim-scripts/SyntaxAttr.vim'
+Plugin 'vim-scripts/SyntaxAttr.vim'
+Plugin 'DetectIndent'
 "Bundle 'altercation/vim-colors-solarized'
 "Bundle 'twerth/ir_black'
 "Bundle 'jnurmine/Zenburn'
@@ -48,8 +58,7 @@ Bundle 'vim-scripts/SyntaxAttr.vim'
 "Bundle 'vim-scripts/candy.vim'
 "Bundle 'vim-scripts/candycode.vim'
 "Bundle 'endel/vim-github-colorscheme'
-Bundle 'noahfrederick/vim-hemisu'
-
+Plugin 'noahfrederick/vim-hemisu'
 
 syntax on
 filetype plugin indent on
@@ -112,7 +121,7 @@ set splitright
 set splitbelow
 
 "turn off for Makefiles and python
-autocmd FileType make setlocal noexpandtab 
+autocmd FileType make setlocal noexpandtab
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 " the command 'retab' will fix a file
 au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
@@ -154,7 +163,39 @@ iab Teh		The
 iab shoudl	should
 iab Shoudl	Should
 
+"color the 80th column, just so I know where it is
+set colorcolumn=80
+highlight colorcolumn ctermbg=lightgrey
 
 set background=dark
 colorscheme hemisu
-" ~/.vimrc ends here
+
+"pretty print XML
+function! DoPrettyXML()
+  " save the filetype so we can restore it later
+  let l:origft = &ft
+  set ft=
+  " delete the xml header if it exists. This will
+  " permit us to surround the document with fake tags
+  " without creating invalid xml.
+  1s/<?xml .*?>//e
+  " insert fake tags around the entire document.
+  " This will permit us to pretty-format excerpts of
+  " XML that may contain multiple top-level elements.
+  0put ='<PrettyXML>'
+  $put ='</PrettyXML>'
+  silent %!xmllint --format -
+  " xmllint will insert an <?xml?> header. it's easy enough to delete
+  " if you don't want it.
+  " delete the fake tags
+  2d
+  $d
+  " restore the 'normal' indentation, which is one extra level
+  " too deep due to the extra tags we wrapped around the document.
+  silent %<
+  " back to home
+  1
+  " restore the filetype
+  exe "set ft=" . l:origft
+endfunction
+command! PrettyXML call DoPrettyXML()

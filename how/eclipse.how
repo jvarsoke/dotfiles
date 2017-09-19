@@ -1,5 +1,9 @@
 ##Eclipse
 
+#getting collors to work with Moonrise
+   $ export SWT_GTK3=1   #not sure why this works, but it turns menus the right color with Dark theme
+
+
 #Setup / Plugins
    VIM - http://vrapper.sourceforge.net/home/
       Drag the "Install" icon into Eclipse

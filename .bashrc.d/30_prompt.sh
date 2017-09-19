@@ -1,6 +1,9 @@
 # prompt
 
-colors=$(tput colors)
+if tty -s ; then
+    colors=$(tput colors)
+fi
+
 
 #if (($colors >= 256)) ; then
 	: #echo "got colors"
@@ -69,21 +72,23 @@ function prompt_svn() {
 # setup prompt ---------------------------------------------------------------
 function prompt_command() {
   local exit_code=$?
-  PS1=""
-  case $TERM in 
-	  xterm*)
-		  PS1="\[\033]0;\w\007\]"
-		  ;;
-  esac
-  # svn: [repo:lastchanged]
-  PS1="$PS1$(prompt_svn)"
-  # git: [branch:flags]
-  PS1="$PS1$(prompt_git)"
-  # path: [user@host:path]
-  PS1="$PS1\h"
-  # exit code: 127
-  PS1="$PS1$(prompt_exitcode "$exit_code")"
-  PS1="$PS1% "
+  if  tty -s ; then
+    PS1=""
+    case $TERM in 
+            xterm*)
+                    PS1="\[\033]0;\w\007\]"
+                    ;;
+    esac
+    # svn: [repo:lastchanged]
+    PS1="$PS1$(prompt_svn)"
+    # git: [branch:flags]
+    PS1="$PS1$(prompt_git)"
+    # path: [user@host:path]
+    PS1="$PS1\h"
+    # exit code: 127
+    PS1="$PS1$(prompt_exitcode "$exit_code")"
+    PS1="$PS1% "
+  fi
 }
 
 

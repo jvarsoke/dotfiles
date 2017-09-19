@@ -158,20 +158,21 @@ bind   attach    i        exit
 bind   attach    ,        exit
 
 ##colors----------------------------------------------------------------------
-color normal       white         black
-color hdrdefault   brightwhite         black
-color quoted       brightblack   black
-color signature    yellow        black
-color message      brightwhite   black
-color attachment   magenta       black
-color search       brightyellow  black
-color tree         cyan          black
+#color normal       white         black
+color normal       default         default
+color hdrdefault   brightwhite   default
+color quoted       brightblack   default
+color signature    yellow        default
+color message      brightwhite   default
+color attachment   magenta       default
+color search       brightyellow  default
+color tree         cyan          default
 color status       black         white
 color indicator    black         white
-color error        brightred     black
+color error        brightred     default
 
-color header       brightblack black ^User-Agent:
-color header       brightblack black ^X-Mailer:
-color header       brightblack black ^X-Spamgourmet:
-color body         white  black "(ftp|https?|mailto)://[^ ]+" # point out URLs
-color body         white  black [-a-z_0-9.]+@[-a-z_0-9.]+ # e-mail addresses
+color header       brightblack default ^User-Agent:
+color header       brightblack default ^X-Mailer:
+color header       brightblack default ^X-Spamgourmet:
+color body         white  default "(ftp|https?|mailto)://[^ ]+" # point out URLs
+color body         white  default [-a-z_0-9.]+@[-a-z_0-9.]+ # e-mail addresses

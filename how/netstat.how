@@ -2,3 +2,5 @@
 
 #see what processes are listening on what ports
 netstat -tanup
+netstat -aln
+

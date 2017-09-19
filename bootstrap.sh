@@ -7,9 +7,9 @@ SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until no longer a symlink
 	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 	SOURCE="$(readlink "$SOURCE")"
-	# if $SOURCE was a relative symlink, we need to resolve it 
+	# if $SOURCE was a relative symlink, we need to resolve it
 	# relative to the path where the symlink file was located
-	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" 
+	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
 DOTFILES="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
@@ -62,7 +62,7 @@ function setup_links() {
 			echo "Warning: Couldn't find src file: $src, skipping"
 		elif [ -L $tgt ] ; then
 			lnk=`readlink -f $tgt`
-			if [ ! $lnk == $src ] ; then 
+			if [ ! $lnk == $src ] ; then
 				echo "Skipping: $tgt linked to $lnk not $src"
 			else
 				[[ $VERBOSE ]] && echo "Skipping: $tgt already linked to $lnk"
@@ -87,7 +87,7 @@ function setup_folders() {
 				echo "Warning: Couldn't find src file: $src, skipping"
 			elif [ -L $tgt ] ; then
 				lnk=`readlink -f $tgt`
-				if [ ! $lnk == $src ] ; then 
+				if [ ! $lnk == $src ] ; then
 					echo "Skipping: $tgt linked to $lnk not $src"
 				else
 					[[ $VERBOSE ]] && echo "Skipping: $tgt already linked to $lnk"
@@ -111,7 +111,7 @@ function setup_folders() {
 # do_clean ------------------------------------------------------------------
 #cleanup an install of .dotfiles (removing all the symlinks)
 function do_clean() {
-	echo "TODO: clean"	
+	echo "TODO: clean"
 }
 
 # Main ----------------------------------------------------------------------

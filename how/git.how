@@ -31,10 +31,37 @@ git config --global alias.co checkout
 #which files have changed between branches
    git diff --name-status master..branch
 
-#convert a folder to git
-   cd <localdir>
-   git init
-   git add .
-   git commit -m 'message'
-   git remote add origin <url>
-   git push -u origin master
+#git-svn
+    git svn clone http://<repo>/svn <localname>  #-s if it's a normal repo with trunk etc)
+        --preserve-empty-dirs                   # put .gitignore in empties
+        -s                  #use standard directories (trunk/tags/branches)
+    git svn create-ignore #creates the .gitignore files
+    git dcommit #to push changes back to svn origin
+
+#file that often changes, should be tracked, but usually not commited
+    git update-index --assume-unchanged path/to/file.txt
+    git update-index --no-assume-unchanged path/to/file.txt #to undo
+
+#remove only from index (keep on fs)
+    git rm --cached
+
+#see any commits on master that are not in your current branch (rebase)
+    git log ..master
+
+#add files to previous commit (if you missed the -a option)
+    git add new-file
+    git commit --amend
+
+#suggestions for .gitconfig
+[alias]
+    hist = log --color --pretty=format:\"%C(yellow)%h%C(reset) %s%C(bold red)%d%C(reset) %C(green)%ad%C(reset) %C(blue)[%an]%C(reset)\" --relative-date --decorate
+    unstage = reset HEAD --
+    restore = checkout --
+    cn = commit --no-verify
+    co = checkout
+    praise = blame
+    visualise = !gitk
+    graph = log --color --graph --pretty=format:\"%h | %ad | %an | %s%d\" --date=short
+
+#brief summary of commits
+    git log --pretty=oneline

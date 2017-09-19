@@ -21,3 +21,9 @@ then resize that volume group for the fs (resize_reiserfs).
 > # lvm
 > lvm > lvreduce -L20G /dev/VolGroup00/LogVol00
 
+#so, you fucked up and did a vgremove, this is how to undo
+pvcreate --restorefile /etc/lvm/archive/ --uuid dev/sdX
+vgcfgrestore -f /etc/lvm/archive/ --verbose thisVG
+vgdisplay -v /dev/thisVG && vgchange -ay /dev/thisVG
+mount /dev/thisVG/missingLV /mnt
+
